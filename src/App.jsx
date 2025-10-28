@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 const App = () => {
    const [change ,setChange] = useState(0)
    const [inputVal ,setInputVal] = useState("")
-   const [dis ,setDis] = useState(false)
-  
+
    function handleIncrement (){
          const step = Number(inputVal) || 1;
         const newValue = Math.min(change + step, 10);
