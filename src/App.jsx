@@ -6,6 +6,7 @@ const App = () => {
    const [inputVal ,setInputVal] = useState("")
    const [theme,setTheme] = useState("light")
 
+
    function handleIncrement (){
          const step = Number(inputVal) || 1;
         const newValue = Math.min(change + step, 10);
