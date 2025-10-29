@@ -1,12 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RiSunFill } from "react-icons/ri";
 import { FaMoon } from "react-icons/fa";
 const App = () => {
    const [change ,setChange] = useState(0)
+
+//   const [change, setChange] = useState(() => {
+//     const stored = localStorage.getItem("counter");
+//     return stored !== null ? Number(stored) : 0;
+// });
+
    const [inputVal ,setInputVal] = useState("")
    const [theme,setTheme] = useState("light")
 
+   useEffect(()=>{
+     const countervalue = (localStorage.getItem("counter"));
+    if(countervalue !== null) setChange(Number(countervalue))
+   },[])
 
+   useEffect(()=>{
+    console.log("useEffect chala, change =", change);
+       localStorage.setItem("counter" , String(change))
+   },[change])
+    
+  function deletedata(){
+     console.log("deletedata called");
+    localStorage.removeItem("counter")
+   }
+  
    function handleIncrement (){
          const step = Number(inputVal) || 1;
         const newValue = Math.min(change + step, 10);
@@ -36,9 +56,12 @@ const App = () => {
    <h1 className={`m-5 text-5xl font-bold ${theme === "light" ? "text-gray-500" :"text-black-900"}`}>Counter</h1>
    <p className={`m-5 text-3xl ${change > 0 ? "text-green-500" :change === 0 ? "text-black-900": "text-red-500"}`}
    >count : {change}
+   
    </p>
    <input className='m-5 outline-none border-1 border-black-500 rounded' 
-   onChange={(e)=>setInputVal(e.target.value) }
+   onChange={(e)=>{
+    setInputVal(e.target.value)
+   } }
    type = "number" 
    value = {inputVal}
    placeholder='Enter the positive number'
@@ -54,8 +77,10 @@ const App = () => {
     >-</button>
     <button className={`m-5 p-2 bg-yellow-600 rounded w-20 h-10 `}
     onClick={() => {
+       deletedata()
      setChange(0);
      setInputVal("");
+    
    }}
     >Reset</button>
 </div>
